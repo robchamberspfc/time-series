@@ -1,0 +1,322 @@
+<html>
+
+  <head>
+
+    <title>Office for National Statistics</title>
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
+    <!--[if lte IE 8]> <link rel="stylesheet" type="text/css" href="https://onsdigital.github.io/ons-pattern-library-starter/sixteens/css/old-ie.css"> <![endif]-->
+    <!--[if IE 9]> <link rel="stylesheet" type="text/css" href="https://onsdigital.github.io/ons-pattern-library-starter/sixteens/css/ie-9.css"> <![endif]-->
+    <!--[if gt IE 9]><!-->
+    <link rel="stylesheet" type="text/css" href="https://cdn.ons.gov.uk/sixteens/1f354a7/css/main.css">
+    <meta content="width=device-width,initial-scale=1.0,user-scalable=1" name="viewport">
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <![endif]-->
+
+  </head>
+  <body>
+
+    <div class="wrapper">
+
+      <h3 id="timeSeriesData">Chart 1</h3>
+
+      <div class="col-wrap">
+        <div class="col col--md-one-third col--lg-one-third">
+          <div id="container1"></div>
+        </div>
+        <div class="col col--md-one-third col--lg-one-third">
+          <div id="container2"></div>
+        </div>
+        <div class="col col--md-one-third col--lg-one-third">
+          <div id="container3"></div>
+        </div>
+      </div>
+
+
+
+
+
+    </div>
+
+  </body>
+
+  <script>
+    Highcharts.chart('container1', {
+
+      title: {
+        text: 'Solar Employment Growth by Sector, 2010-2016'
+      },
+
+      subtitle: {
+        text: 'Source: thesolarfoundation.com'
+      },
+
+      yAxis: {
+        title: {
+          text: 'Number of Employees'
+        }
+      },
+      legend: {
+        layout: 'vertical',
+        align: 'right',
+        verticalAlign: 'middle'
+      },
+
+      plotOptions: {
+        series: {
+          pointStart: 2010
+        }
+      },
+
+      series: [
+        {
+          name: 'Installation',
+          data: [
+            43934,
+            52503,
+            57177,
+            69658,
+            97031,
+            119931,
+            137133,
+            154175
+          ]
+        }, {
+          name: 'Manufacturing',
+          data: [
+            24916,
+            24064,
+            29742,
+            29851,
+            32490,
+            30282,
+            38121,
+            40434
+          ]
+        }, {
+          name: 'Sales & Distribution',
+          data: [
+            11744,
+            17722,
+            16005,
+            19771,
+            20185,
+            24377,
+            32147,
+            39387
+          ]
+        }, {
+          name: 'Project Development',
+          data: [
+            null,
+            null,
+            7988,
+            12169,
+            15112,
+            22452,
+            34400,
+            34227
+          ]
+        }, {
+          name: 'Other',
+          data: [
+            12908,
+            5948,
+            8105,
+            11248,
+            8989,
+            11816,
+            18274,
+            18111
+          ]
+        }
+      ]
+
+    });
+    Highcharts.chart('container2', {
+
+      title: {
+        text: 'Solar Employment Growth by Sector, 2010-2016'
+      },
+
+      subtitle: {
+        text: 'Source: thesolarfoundation.com'
+      },
+
+      yAxis: {
+        title: {
+          text: 'Number of Employees'
+        }
+      },
+      legend: {
+        layout: 'vertical',
+        align: 'right',
+        verticalAlign: 'middle'
+      },
+
+      plotOptions: {
+        series: {
+          pointStart: 2010
+        }
+      },
+
+      series: [
+        {
+          name: 'Installation',
+          data: [
+            43934,
+            52503,
+            57177,
+            69658,
+            97031,
+            119931,
+            137133,
+            154175
+          ]
+        }, {
+          name: 'Manufacturing',
+          data: [
+            24916,
+            24064,
+            29742,
+            29851,
+            32490,
+            30282,
+            38121,
+            40434
+          ]
+        }, {
+          name: 'Sales & Distribution',
+          data: [
+            11744,
+            17722,
+            16005,
+            19771,
+            20185,
+            24377,
+            32147,
+            39387
+          ]
+        }, {
+          name: 'Project Development',
+          data: [
+            null,
+            null,
+            7988,
+            12169,
+            15112,
+            22452,
+            34400,
+            34227
+          ]
+        }, {
+          name: 'Other',
+          data: [
+            12908,
+            5948,
+            8105,
+            11248,
+            8989,
+            11816,
+            18274,
+            18111
+          ]
+        }
+      ]
+
+    });
+    Highcharts.chart('container3', {
+
+      title: {
+        text: 'Solar Employment Growth by Sector, 2010-2016'
+      },
+
+      subtitle: {
+        text: 'Source: thesolarfoundation.com'
+      },
+
+      yAxis: {
+        title: {
+          text: 'Number of Employees'
+        }
+      },
+      legend: {
+        layout: 'vertical',
+        align: 'right',
+        verticalAlign: 'middle'
+      },
+
+      plotOptions: {
+        series: {
+          pointStart: 2010
+        }
+      },
+
+      series: [
+        {
+          name: 'Installation',
+          data: [
+            43934,
+            52503,
+            57177,
+            69658,
+            97031,
+            119931,
+            137133,
+            154175
+          ]
+        }, {
+          name: 'Manufacturing',
+          data: [
+            24916,
+            24064,
+            29742,
+            29851,
+            32490,
+            30282,
+            38121,
+            40434
+          ]
+        }, {
+          name: 'Sales & Distribution',
+          data: [
+            11744,
+            17722,
+            16005,
+            19771,
+            20185,
+            24377,
+            32147,
+            39387
+          ]
+        }, {
+          name: 'Project Development',
+          data: [
+            null,
+            null,
+            7988,
+            12169,
+            15112,
+            22452,
+            34400,
+            34227
+          ]
+        }, {
+          name: 'Other',
+          data: [
+            12908,
+            5948,
+            8105,
+            11248,
+            8989,
+            11816,
+            18274,
+            18111
+          ]
+        }
+      ]
+
+    });
+  </script>
+
+</html>

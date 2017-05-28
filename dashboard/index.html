@@ -3,6 +3,9 @@
 	<head>
 
 		<title>Office for National Statistics</title>
+		<script src="https://code.highcharts.com/highcharts.js"></script>
+		<script src="https://code.highcharts.com/modules/data.js"></script>
+		<script src="https://code.highcharts.com/modules/exporting.js"></script>
 		<script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
 		<!--[if lte IE 8]> <link rel="stylesheet" type="text/css" href="https://onsdigital.github.io/ons-pattern-library-starter/sixteens/css/old-ie.css"> <![endif]-->
 		<!--[if IE 9]> <link rel="stylesheet" type="text/css" href="https://onsdigital.github.io/ons-pattern-library-starter/sixteens/css/ie-9.css"> <![endif]-->
@@ -203,8 +206,8 @@
 
 		<div class="wrapper">
 			Blank? Dont forget some parameters!
-
-			<h3 id="timeSeriesData"></h3>
+			<div id="charts">
+			</div>
 
 		</div>
 
@@ -228,6 +231,7 @@
 			var api = "https://api.ons.gov.uk/timeseries/"
 			var website = "https://www.ons.gov.uk"
 			const ts = document.getElementById('timeSeriesData');
+			const charts = document.getElementById('charts');
 			const tsdm = document.getElementById('timeSeriesDataMonths');
 			const tsdq = document.getElementById('timeSeriesDataQuarters');
 			const tsdy = document.getElementById('timeSeriesDataYears');
@@ -303,40 +307,147 @@
 						}
 					}
 				}
-
-				//console.log (obj.id)
 				for (var i = 0; i < obj.id.length; i++) {
-
-					//console.log(obj.id.length) console.log(obj.id[i])
-
 					fetch(api + obj.id[i], {mode: 'cors'}).then(data => data.json()).then(function (data) {
-						//console.log (data)
-						let getLatest = data.totalItems;
+
 						let variations = data.items;
-						//if (getLatest > 1) {
-						variations.map(function (variations) {
-							let uri = variations.uri;
-							//console.log (uri)
-							let stripDataset = uri.substr(0, uri.lastIndexOf("/"));
-							var latestUri = website + stripDataset + "/data"
+						let getLatest = data.totalItems;
 
-							fetch(latestUri, {mode: 'cors'}).then(data => data.json()).then(function (data) {
-								//console.log (data)
-								let p = createNode('p');
-								let timeSeriesData = data.description;
-								console.log (timeSeriesData.title)
-								p.innerHTML = timeSeriesData.title
-								ts.appendChild(p, timeSeriesData)
+						if (getLatest > 1) {
+							//console.log(getLatest)
+							variations.map(function (variations, index) {
+								//console.log(index)
+								if (index == 0) {
+									let uriFirst = variations.uri;
+									let stripDataset = uriFirst.substr(0, uriFirst.lastIndexOf("/"));
+									var latestUri = website + stripDataset + "/data"
 
+									blocks(data, latestUri)
+
+								}
+							})
+						} else {
+
+							variations.map(function (variations) {
+								let uri = variations.uri;
+								let stripDataset = uri.substr(0, uri.lastIndexOf("/"));
+								var latestUri = website + stripDataset + "/data"
+
+								blocks(data, latestUri)
 
 							})
-						})
+						}
 					});
 				}
 
 				return obj;
 
 			}
+
+
+			function blocks (data, latestUri) {
+				fetch(latestUri, {mode: 'cors'}).then(data => data.json()).then(function (data) {
+					let divcol = createNode('div');
+					let div = createNode('div');
+					let div2 = createNode('div');
+					let timeSeriesData = data.description;
+					div.innerHTML = timeSeriesData.title;
+					div2.innerHTML = timeSeriesData.releaseDate;
+					charts.appendChild(divcol)
+					divcol.classList.add("col-wrap");
+					divcol.appendChild(div)
+					div.classList.add("col");
+					div.classList.add("col--md-full");
+					div.classList.add("col--lg-full");
+					div.appendChild(div2)
+					div2.classList.add("col");
+					div2.classList.add("col--md-one-third");
+					div2.classList.add("col--lg-one-third");
+					div2.innerHTML = "<div id='Months'></div><div id='Quarters'></div><div id='Years'></div>"
+					let timeSeriesDataMonths = data.months;
+					let timeSeriesDataQuarters = data.quarters;
+					let timeSeriesDataYears = data.years;
+					if (data.months.length > 0) {
+						block = "Months"
+						dataArrayMonths = []
+						eval("timeSeriesData" + block).map(function (data) {
+							date = data.date
+							value = data.value
+							chartdata = [date, parseFloat(value)]
+							eval("dataArray" + block).push(chartdata)
+						})
+						chart (timeSeriesData, block)
+					}
+					if (data.quarters.length > 0) {
+						block = "Quarters"
+						dataArrayQuarters = []
+						eval("timeSeriesData" + block).map(function (data) {
+							date = data.date
+							value = data.value
+							chartdata = [date, parseFloat(value)]
+							eval("dataArray" + block).push(chartdata)
+						})
+						chart (timeSeriesData, block)
+					}
+					if (data.years.length > 0) {
+						block = "Years"
+						dataArrayYears = []
+						eval("timeSeriesData" + block).map(function (data) {
+							date = data.date
+							value = data.value
+							chartdata = [date, parseFloat(value)]
+							eval("dataArray" + block).push(chartdata)
+						})
+						chart (timeSeriesData, block)
+					}
+				})
+
+			}
+
+
+			function chart (timeSeriesData, block) {
+				Highcharts.chart( block , {
+				series: [
+					{
+						data: eval("dataArray" + block),
+						name: timeSeriesData.cdid + ": " + block
+					}
+				],
+				title: {
+					text: timeSeriesData.cdid + ": " + block + " (Dataset: " + timeSeriesData.datasetId + ")"
+				},
+				navigation: {
+					buttonOptions: {
+						enabled: false
+					}
+				},
+				yAxis: {
+					labels: {
+						enabled: false
+					},
+					title: {
+						enabled: false
+					}
+				},
+				legend: {
+					enabled: false
+				},
+				tooltip: {
+					formatter: function () {
+						return '<b>' + this.key + '</b><br>' + timeSeriesData.preUnit + this.y + ' ' + timeSeriesData.unit + '';
+					},
+				},
+				xAxis: {
+					type: "category",
+					crosshair: true
+				},
+				credits: {
+					enabled: false
+				}
+			});
+		}
+
+
 		</script>
 
 	</body>
