@@ -62,13 +62,13 @@
 			<h3 id="timeSeriesData"></h3>
 
 			<div id="hiddenChartMonths" style="display:none">
-				<div id="tsdm" style="width: 100%; height: 400px"></div>
+				<div id="Months" style="width: 100%; height: 400px"></div>
 			</div>
 			<div id="hiddenChartQuarters" style="display:none">
-				<div id="tsdq" style="width: 100%; height: 400px"></div>
+				<div id="Quarters" style="width: 100%; height: 400px"></div>
 			</div>
 			<div id="hiddenChartYears" style="display:none">
-				<div id="tsdy" style="width: 100%; height: 400px"></div>
+				<div id="Years" style="width: 100%; height: 400px"></div>
 			</div>
 
 		</div>
@@ -92,9 +92,9 @@
 
 			const ts = document.getElementById('timeSeriesData');
 			const tsd = document.getElementById('variations');
-			const tsdm = document.getElementById('timeSeriesDataMonths');
-			const tsdq = document.getElementById('timeSeriesDataQuarters');
-			const tsdy = document.getElementById('timeSeriesDataYears');
+			const Months = document.getElementById('timeSeriesDataMonths');
+			const Quarters = document.getElementById('timeSeriesDataQuarters');
+			const Years = document.getElementById('timeSeriesDataYears');
 			const hiddenChartMonths = document.getElementById('hiddenChartMonths');
 			const hiddenChartQuarters = document.getElementById('hiddenChartQuarters');
 			const hiddenChartYears = document.getElementById('hiddenChartYears');
@@ -145,64 +145,40 @@
 									let timeSeriesDataQuarters = data.quarters;
 									let timeSeriesDataYears = data.years;
 									if (data.months.length > 0) {
-										dataArraymonths = []
-										hiddenChartMonths.style.display = '';
-										timeSeriesDataMonths.map(function (timeSeriesDataMonths) {
-											date = timeSeriesDataMonths.date
-											value = timeSeriesDataMonths.value
-											chartdata = [
-												timeSeriesDataMonths.date,
-												parseFloat(timeSeriesDataMonths.value)
-											]
-											dataArraymonths.push(chartdata)
-										});
-										Highcharts.chart('tsdm', {
-											series: [
-												{
-													data: dataArraymonths
-												}
-											]
-										});
+										block = "Months"
+										dataArrayMonths = []
+										eval("hiddenChart" + block).style.display = 'block';
+										eval("timeSeriesData" + block).map(function (data) {
+											date = data.date
+											value = data.value
+											chartdata = [date, parseFloat(value)]
+											eval("dataArray" + block).push(chartdata)
+										})
+										chart (timeSeriesData, block)
 									}
 									if (data.quarters.length > 0) {
-										dataArrayquarters = []
-										hiddenChartQuarters.style.display = '';
-										timeSeriesDataQuarters.map(function (timeSeriesDataQuarters) {
-											date = timeSeriesDataQuarters.date
-											value = timeSeriesDataQuarters.value
-											chartdata = [
-												timeSeriesDataQuarters.date,
-												parseFloat(timeSeriesDataQuarters.value)
-											]
-											dataArrayquarters.push(chartdata)
-										});
-										Highcharts.chart('tsdq', {
-											series: [
-												{
-													data: dataArrayquarters
-												}
-											]
-										});
+										block = "Quarters"
+										dataArrayQuarters = []
+										eval("hiddenChart" + block).style.display = 'block';
+										eval("timeSeriesData" + block).map(function (data) {
+											date = data.date
+											value = data.value
+											chartdata = [date, parseFloat(value)]
+											eval("dataArray" + block).push(chartdata)
+										})
+										chart (timeSeriesData, block)
 									}
 									if (data.years.length > 0) {
-										dataArrayyears = []
-										hiddenChartYears.style.display = '';
-										timeSeriesDataYears.map(function (timeSeriesDataYears) {
-											date = timeSeriesDataYears.date
-											value = timeSeriesDataYears.value
-											chartdata = [
-												timeSeriesDataYears.date,
-												parseFloat(timeSeriesDataYears.value)
-											]
-											dataArrayyears.push(chartdata)
+										block = "Years"
+										dataArrayYears = []
+										eval("hiddenChart" + block).style.display = 'block';
+										eval("timeSeriesData" + block).map(function (data) {
+											date = data.date
+											value = data.value
+											chartdata = [date, parseFloat(value)]
+											eval("dataArray" + block).push(chartdata)
 										})
-										Highcharts.chart('tsdy', {
-											series: [
-												{
-													data: dataArrayyears
-												}
-											]
-										});
+										chart (timeSeriesData, block)
 									}
 								})
 							}
@@ -226,45 +202,28 @@
 					let timeSeriesDataQuarters = data.quarters;
 					let timeSeriesDataYears = data.years;
 					if (data.months.length > 0) {
-						dataArraymonths = []
-						hiddenChartMonths.style.display = 'block';
-						timeSeriesDataMonths.map(function (timeSeriesDataMonths) {
-							date = timeSeriesDataMonths.date
-							value = timeSeriesDataMonths.value
-							chartdata = [
-								timeSeriesDataMonths.date,
-								parseFloat(timeSeriesDataMonths.value)
-							]
-							dataArraymonths.push(chartdata)
-						});
-						let chart = (Highcharts.chart('tsdm', {
-							series: [
-								{
-									data: dataArraymonths
-								}
-							]
-						}))
-						append(ts, chart)
+						block = "Months"
+						dataArrayMonths = []
+						eval("hiddenChart" + block).style.display = 'block';
+						eval("timeSeriesData" + block).map(function (data) {
+							date = data.date
+							value = data.value
+							chartdata = [date, parseFloat(value)]
+							eval("dataArray" + block).push(chartdata)
+						})
+						chart (timeSeriesData, block)
 					}
 					if (data.quarters.length > 0) {
-						dataArrayquarters = []
-						hiddenChartQuarters.style.display = 'block';
-						timeSeriesDataQuarters.map(function (timeSeriesDataQuarters) {
-							date = timeSeriesDataQuarters.date
-							value = timeSeriesDataQuarters.value
-							chartdata = [
-								timeSeriesDataQuarters.date,
-								parseFloat(timeSeriesDataQuarters.value)
-							]
-							dataArrayquarters.push(chartdata)
-						});
-						Highcharts.chart('tsdq', {
-							series: [
-								{
-									data: dataArrayquarters
-								}
-							]
-						});
+						block = "Quarters"
+						dataArrayQuarters = []
+						eval("hiddenChart" + block).style.display = 'block';
+						eval("timeSeriesData" + block).map(function (data) {
+							date = data.date
+							value = data.value
+							chartdata = [date, parseFloat(value)]
+							eval("dataArray" + block).push(chartdata)
+						})
+						chart (timeSeriesData, block)
 					}
 					if (data.years.length > 0) {
 						block = "Years"
@@ -276,39 +235,7 @@
 							chartdata = [date, parseFloat(value)]
 							eval("dataArray" + block).push(chartdata)
 						})
-						Highcharts.chart('tsdy', {
-							series: [
-								{
-									data: eval("dataArray" + block),
-									name: timeSeriesData.title
-								}
-							],
-							title: {
-								text: block
-							},
-							navigation: {
-								buttonOptions: {
-									enabled: false
-								}
-							},
-							yAxis: {
-								labels: {
-									enabled: false
-								},
-								title: {
-									enabled: false
-								}
-							},
-							legend: {
-								enabled: false
-							},
-							xAxis: {
-								type: "category"
-							},
-							credits: {
-								enabled: false
-							}
-						});
+						chart (timeSeriesData, block)
 					}
 				})
 			}
@@ -316,6 +243,50 @@
 			function reset() {
 				location.reload();
 			}
+
+
+			function chart (timeSeriesData, block) {
+				Highcharts.chart( block , {
+				series: [
+					{
+						data: eval("dataArray" + block),
+						name: timeSeriesData.cdid + ": " + block
+					}
+				],
+				title: {
+					text: timeSeriesData.cdid + ": " + block + " (Dataset: " + timeSeriesData.datasetId + ")"
+				},
+				navigation: {
+					buttonOptions: {
+						enabled: false
+					}
+				},
+				yAxis: {
+					labels: {
+						enabled: false
+					},
+					title: {
+						enabled: false
+					}
+				},
+				legend: {
+					enabled: false
+				},
+				tooltip: {
+					formatter: function () {
+						return '<b>' + this.key + '</b><br>' + timeSeriesData.preUnit + this.y + ' ' + timeSeriesData.unit + '';
+					},
+				},
+				xAxis: {
+					type: "category",
+					crosshair: true
+				},
+				credits: {
+					enabled: false
+				}
+			});
+		}
+
 		</script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
