@@ -4,15 +4,15 @@ Tools and playing with ONS API
 
 ----------
 
-##CDID Search
+## CDID Search
 
-###[Search returns tables](http://rob.chambersbristol.co.uk/cdidsearch/index.html)
+### [Search returns tables](http://rob.chambersbristol.co.uk/cdidsearch/index.html)
 
-###[Search returns charts](http://rob.chambersbristol.co.uk/cdidsearch/chart.html)
+### [Search returns charts](http://rob.chambersbristol.co.uk/cdidsearch/chart.html)
 
 ----------
 
-##[Dashboard](http://rob.chambersbristol.co.uk/dashboard/index.html)
+## [Dashboard](http://rob.chambersbristol.co.uk/dashboard/index.html)
 
 ----------
 
