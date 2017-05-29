@@ -2,11 +2,10 @@
 
 	<head>
 
-		<title>Office for National Statistics</title>
+		<title>Time series dashboard</title>
 		<script src="https://code.highcharts.com/highcharts.js"></script>
 		<script src="https://code.highcharts.com/modules/data.js"></script>
 		<script src="https://code.highcharts.com/modules/exporting.js"></script>
-		<script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
 		<!--[if lte IE 8]> <link rel="stylesheet" type="text/css" href="https://onsdigital.github.io/ons-pattern-library-starter/sixteens/css/old-ie.css"> <![endif]-->
 		<!--[if IE 9]> <link rel="stylesheet" type="text/css" href="https://onsdigital.github.io/ons-pattern-library-starter/sixteens/css/ie-9.css"> <![endif]-->
 		<!--[if gt IE 9]><!-->
@@ -206,8 +205,7 @@
 
 		<div class="wrapper">
 			Blank? Dont forget some parameters!
-			<div id="charts">
-			</div>
+			<div id="charts"></div>
 
 		</div>
 
@@ -315,6 +313,7 @@
 
 						if (getLatest > 1) {
 							//console.log(getLatest)
+
 							variations.map(function (variations, index) {
 								//console.log(index)
 								if (index == 0) {
@@ -344,26 +343,15 @@
 
 			}
 
-
-			function blocks (data, latestUri) {
+			function blocks(data, latestUri) {
 				fetch(latestUri, {mode: 'cors'}).then(data => data.json()).then(function (data) {
+					var rand = Math.floor((Math.random() * 10000000) + 1);
 					let divcol = createNode('div');
-					let div = createNode('div');
-					let div2 = createNode('div');
 					let timeSeriesData = data.description;
-					div.innerHTML = timeSeriesData.title;
-					div2.innerHTML = timeSeriesData.releaseDate;
 					charts.appendChild(divcol)
 					divcol.classList.add("col-wrap");
-					divcol.appendChild(div)
-					div.classList.add("col");
-					div.classList.add("col--md-full");
-					div.classList.add("col--lg-full");
-					div.appendChild(div2)
-					div2.classList.add("col");
-					div2.classList.add("col--md-one-third");
-					div2.classList.add("col--lg-one-third");
-					div2.innerHTML = "<div id='Months'></div><div id='Quarters'></div><div id='Years'></div>"
+					divcol.classList.add("col--lg-one");
+					divcol.innerHTML = "<div class='col'><h2>" + timeSeriesData.title + "</h2></div><div class = 'col-wrap'><div id='Months" + rand + "' class='col col--md-one-third col--lg-one-third'></div><div id='Quarters" + rand + "' class='col col--md-one-third col--lg-one-third'></div><div id='Years" + rand + "' class='col col--md-one-third col--lg-one-third'></div></div>"
 					let timeSeriesDataMonths = data.months;
 					let timeSeriesDataQuarters = data.quarters;
 					let timeSeriesDataYears = data.years;
@@ -376,7 +364,7 @@
 							chartdata = [date, parseFloat(value)]
 							eval("dataArray" + block).push(chartdata)
 						})
-						chart (timeSeriesData, block)
+						chart(timeSeriesData, block, rand)
 					}
 					if (data.quarters.length > 0) {
 						block = "Quarters"
@@ -387,7 +375,7 @@
 							chartdata = [date, parseFloat(value)]
 							eval("dataArray" + block).push(chartdata)
 						})
-						chart (timeSeriesData, block)
+						chart(timeSeriesData, block, rand)
 					}
 					if (data.years.length > 0) {
 						block = "Years"
@@ -398,56 +386,61 @@
 							chartdata = [date, parseFloat(value)]
 							eval("dataArray" + block).push(chartdata)
 						})
-						chart (timeSeriesData, block)
+						chart(timeSeriesData, block, rand)
 					}
 				})
 
 			}
 
-
-			function chart (timeSeriesData, block) {
-				Highcharts.chart( block , {
-				series: [
-					{
-						data: eval("dataArray" + block),
-						name: timeSeriesData.cdid + ": " + block
-					}
-				],
-				title: {
-					text: timeSeriesData.cdid + ": " + block + " (Dataset: " + timeSeriesData.datasetId + ")"
-				},
-				navigation: {
-					buttonOptions: {
-						enabled: false
-					}
-				},
-				yAxis: {
-					labels: {
-						enabled: false
-					},
+			function chart(timeSeriesData, block, rand) {
+				Highcharts.chart(block + rand, {
+					series: [
+						{
+							data: eval("dataArray" + block),
+							name: timeSeriesData.cdid + ": " + block
+						}
+					],
 					title: {
+						text: timeSeriesData.cdid + ": " + block + " (Dataset: " + timeSeriesData.datasetId + ")"
+					},
+					yAxis: {
+						labels: {
+							enabled: false
+						},
+						title: {
+							enabled: false
+						}
+					},
+					xAxis: {
+						type: "category",
+						crosshair: true
+					},
+					tooltip: {
+						formatter: function () {
+							return '<b>' + this.key + '</b><br>' + timeSeriesData.preUnit + this.y + ' ' + timeSeriesData.unit + '';
+						}
+					},
+					plotOptions: {
+						series: {
+							lineColor: '#0F8243',
+							marker: {
+								enabled: false
+							}
+						}
+					},
+					navigation: {
+						buttonOptions: {
+							enabled: false
+						}
+					},
+					legend: {
+						enabled: false
+					},
+					credits: {
 						enabled: false
 					}
-				},
-				legend: {
-					enabled: false
-				},
-				tooltip: {
-					formatter: function () {
-						return '<b>' + this.key + '</b><br>' + timeSeriesData.preUnit + this.y + ' ' + timeSeriesData.unit + '';
-					},
-				},
-				xAxis: {
-					type: "category",
-					crosshair: true
-				},
-				credits: {
-					enabled: false
-				}
-			});
-		}
-
-
+				});
+			}
 		</script>
 
 	</body>
