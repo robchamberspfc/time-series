@@ -202,22 +202,120 @@
 				</form>
 			</div>
 		</div>
+		<div class="page-intro background--gallery">
+			<div class="wrapper">
+				<div class="col-wrap">
+					<div class="col">
+						<nav>
+							<div class="breadcrumb print--hide">
+								<ol class="breadcrumb__list">
+									<li class="breadcrumb__item">
+										<a class="breadcrumb__link" href="https//www.ons.gov.uk">
+											Home
+										</a>
+									</li>
+									<li class="breadcrumb__item">
+										Time series dashboard [prototype]
+									</li>
+								</ol>
+							</div>
+						</nav>
+						<div class="col col--md-47 col--lg-48">
+							<h1 class="page-intro__title ">
+								Time series dashboard
+							</h1>
+							<p class="page-intro__content">
+								Customisable dashboard generated from URL parameters. <a href = "/dashboard/index.html?id=abmi&id=chaw&id=ukpop&id=d7g7&id=ewpop&id=wapop">Example.</a>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="nav-secondary-wrap">
+			<div class="wrapper">
+				<div class="col-wrap">
+					<nav>
+						<div class="nav-secondary col col--lg-full">
+							<h2 class="nav-secondary__title">On this page:</h2>
+							<ul id="series" class="nav-secondary__list"></ul>
+						</div>
+					</nav>
+				</div>
+			</div>
+		</div>
 
 		<div class="wrapper">
-			Blank? Dont forget some parameters!
 			<div id="charts"></div>
-
+			<br>
 		</div>
 
 		<footer class="print--hide">
 			<h2 class="visuallyhidden">Footer links</h2>
 			<div class="footer">
 				<div class="wrapper">
+					<nav>
+						<div class="footer-nav col-wrap">
+							<div class="col col--lg-one-third col--md-one-third">
+								<h3 class="footer-nav__heading">Help</h3>
+								<ul class="footer-nav__list">
+									<li class="footer-nav__item">
+										<a href="/help/accessibility">Accessibility</a>
+									</li>
+									<li class="footer-nav__item">
+										<a href="/help/cookiesandprivacy">Cookies and privacy</a>
+									</li>
+									<li class="footer-nav__item">
+										<a href="/help/termsandconditions">Terms and conditions</a>
+									</li>
+								</ul>
+							</div>
+							<div class="col col--lg-one-third col--md-one-third">
+								<h3 class="footer-nav__heading">About ONS</h3>
+								<ul class="footer-nav__list">
+									<li class="footer-nav__item">
+										<a href="/aboutus/whatwedo">What we do</a>
+									</li>
+									<li class="footer-nav__item">
+										<a href="/aboutus/careers">Careers</a>
+									</li>
+									<li class="footer-nav__item">
+										<a href="/aboutus/contactus">Contact us</a>
+									</li>
+									<li class="footer-nav__item">
+										<a href="/news">News</a>
+									</li>
+									<li class="footer-nav__item">
+										<a href="/aboutus/transparencyandgovernance/freedomofinformationfoi">Freedom of Information</a>
+									</li>
+								</ul>
+							</div>
+							<div class="col col--lg-one-third col--md-one-third">
+								<h3 class="footer-nav__heading">Connect with us</h3>
+								<ul class="footer-nav__list">
+									<li class="footer-nav__item">
+										<a href="https://twitter.com/ONS">Twitter</a>
+									</li>
+									<li class="footer-nav__item">
+										<a href="https://www.facebook.com/ONS">Facebook</a>
+									</li>
+									<li class="footer-nav__item">
+										<a href="https://www.linkedin.com/company/office-for-national-statistics">LinkedIn</a>
+									</li>
+									<li class="footer-nav__item">
+										<a href="https://public.govdelivery.com/accounts/UKONS/subscribers/new">Email alerts</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</nav>
+				</div>
+				<div class="wrapper">
 					<div class="footer-license">
 						<img class="footer-license__img" alt="OGL" width="60" src="https://www.ons.gov.uk/img/ogl.png">
 						<p class="footer-license__text margin-left-sm--0">
 							All content is available under the
-							<a class="icon--hide" href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/">Open Government Licence v3.0</a>, except where otherwise stated
+							<a href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/">Open Government Licence v3.0</a>, except where otherwise stated
 						</p>
 					</div>
 				</div>
@@ -230,9 +328,7 @@
 			var website = "https://www.ons.gov.uk"
 			const ts = document.getElementById('timeSeriesData');
 			const charts = document.getElementById('charts');
-			const tsdm = document.getElementById('timeSeriesDataMonths');
-			const tsdq = document.getElementById('timeSeriesDataQuarters');
-			const tsdy = document.getElementById('timeSeriesDataYears');
+			const series = document.getElementById('series');
 
 			function createNode(element) {
 				return document.createElement(element); // Create the type of element you pass in the parameters
@@ -268,7 +364,6 @@
 					for (var i = 0; i < arr.length; i++) {
 						// separate the keys and the values
 						var a = arr[i].split('=');
-
 						// in case params look like: list[]=thing1&list[]=thing2
 						var paramNum = undefined;
 						var paramName = a[0].replace(/\[\d*\]/, function (v) {
@@ -301,10 +396,11 @@
 								obj[paramName][paramNum] = paramValue // if param name doesn't exist yet, set it;
 							}
 						} else {
-							obj[paramName] = paramValue;
+							obj[paramName] = [paramValue];
 						}
 					}
 				}
+
 				for (var i = 0; i < obj.id.length; i++) {
 					fetch(api + obj.id[i], {mode: 'cors'}).then(data => data.json()).then(function (data) {
 
@@ -347,11 +443,15 @@
 				fetch(latestUri, {mode: 'cors'}).then(data => data.json()).then(function (data) {
 					var rand = Math.floor((Math.random() * 10000000) + 1);
 					let divcol = createNode('div');
+					let li = createNode('li');
 					let timeSeriesData = data.description;
-					charts.appendChild(divcol)
+					charts.appendChild(divcol);
+					series.append(li);
 					divcol.classList.add("col-wrap");
 					divcol.classList.add("col--lg-one");
-					divcol.innerHTML = "<div class='col'><h2>" + timeSeriesData.title + "</h2></div><div class = 'col-wrap'><div id='Months" + rand + "' class='col col--md-one-third col--lg-one-third'></div><div id='Quarters" + rand + "' class='col col--md-one-third col--lg-one-third'></div><div id='Years" + rand + "' class='col col--md-one-third col--lg-one-third'></div></div>"
+					li.classList.add("nav-secondary__item");
+					divcol.innerHTML = "<div class='col'><h2 id = '" + timeSeriesData.cdid + "'>" + timeSeriesData.title + "</h2></div><div class = 'col-wrap'><div id='Months" + rand + "' class='col col--md-one-third col--lg-one-third'></div><div id='Quarters" + rand + "' class='col col--md-one-third col--lg-one-third'></div><div id='Years" + rand + "' class='col col--md-one-third col--lg-one-third'></div></div>";
+					li.innerHTML = "<a href='#" + timeSeriesData.cdid + "' class='js-scroll'>&nbsp;&nbsp;" + timeSeriesData.cdid + "</a>";
 					let timeSeriesDataMonths = data.months;
 					let timeSeriesDataQuarters = data.quarters;
 					let timeSeriesDataYears = data.years;
@@ -394,6 +494,10 @@
 
 			function chart(timeSeriesData, block, rand) {
 				Highcharts.chart(block + rand, {
+					chart: {
+						height: 200,
+						spacingBottom: 30
+					},
 					series: [
 						{
 							data: eval("dataArray" + block),
@@ -401,7 +505,9 @@
 						}
 					],
 					title: {
-						text: timeSeriesData.cdid + ": " + block + " (Dataset: " + timeSeriesData.datasetId + ")"
+						text: timeSeriesData.cdid + ": " + block,
+						verticalAlign: 'bottom',
+						y: 20
 					},
 					yAxis: {
 						labels: {
@@ -413,18 +519,33 @@
 					},
 					xAxis: {
 						type: "category",
-						crosshair: true
+						crosshair: true,
+						labels: {
+							enabled: false
+						},
+						minorTickLength: 0,
+						tickLength: 0
 					},
 					tooltip: {
 						formatter: function () {
 							return '<b>' + this.key + '</b><br>' + timeSeriesData.preUnit + this.y + ' ' + timeSeriesData.unit + '';
-						}
+						},
+						shadow: false,
+						borderColor: '#0F8243'
 					},
 					plotOptions: {
 						series: {
 							lineColor: '#0F8243',
 							marker: {
-								enabled: false
+								enabled: false,
+								states: {
+									hover: {
+										fillColor: '#ffffff',
+										lineColor: '#0F8243',
+										lineWidth: 1,
+										radius: 3
+									}
+								}
 							}
 						}
 					},
