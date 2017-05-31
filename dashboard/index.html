@@ -225,7 +225,7 @@
 								Time series dashboard
 							</h1>
 							<p class="page-intro__content">
-								Customisable dashboard generated from URL parameters (<a href = "index.html?id=abmi&id=chaw&id=ukpop&id=d7g7&id=ewpop&id=wapop">example</a>).
+								Customisable dashboard generated from URL parameters (<a href="index.html?id=abmi&id=chaw&id=ukpop&id=d7g7&id=ewpop&id=wapop">example</a>).
 							</p>
 						</div>
 					</div>
@@ -442,19 +442,43 @@
 			function blocks(data, latestUri) {
 				fetch(latestUri, {mode: 'cors'}).then(data => data.json()).then(function (data) {
 					var rand = Math.floor((Math.random() * 10000000) + 1);
+					let timeSeriesDataMonths = data.months;
+					let timeSeriesDataQuarters = data.quarters;
+					let timeSeriesDataYears = data.years;
+					if (data.months.length > 0) {
+						if (data.quarters.length > 0) {
+							if (data.years.length > 0) {
+								var columns = "col col--md-one-third col--lg-one-third"
+							} else {
+								var columns = "col col--md-one-half col--lg-one-half"
+							}
+						} else {
+							if (data.years.length > 0) {
+								var columns = "col col--md-half col--lg-half"
+							} else {
+								var columns = "col col--md-full col--lg-full"
+							}
+						}
+					} else {
+						if (data.quarters.length > 0) {
+							if (data.years.length > 0) {
+								var columns = "col col--md-half col--lg-half"
+							} else {
+								var columns = "col col--md-full col--lg-full"
+							}
+						} else if (data.years.length > 0) {
+							var columns = "col col--md-full col--lg-full"
+						}
+					}
 					let divcol = createNode('div');
 					let li = createNode('li');
 					let timeSeriesData = data.description;
 					charts.appendChild(divcol);
 					series.append(li);
 					divcol.classList.add("col-wrap");
-					divcol.classList.add("col--lg-one");
 					li.classList.add("nav-secondary__item");
-					divcol.innerHTML = "<div class='col'><h2 id = '" + timeSeriesData.cdid + "'>" + timeSeriesData.title + "</h2></div><div class = 'col-wrap'><div id='Months" + rand + "' class='col col--md-one-third col--lg-one-third'></div><div id='Quarters" + rand + "' class='col col--md-one-third col--lg-one-third'></div><div id='Years" + rand + "' class='col col--md-one-third col--lg-one-third'></div></div>";
+					divcol.innerHTML = "<div class='col'><h2 id = '" + timeSeriesData.cdid + "'>" + timeSeriesData.title + "</h2></div><div class = 'wrapper'><div class = 'col-wrap'><div id='Months" + rand + "' class='" + columns + "'></div><div id='Quarters" + rand + "' class='" + columns + "'></div><div id='Years" + rand + "' class='" + columns + "'></div></div></div>";
 					li.innerHTML = "<a href='#" + timeSeriesData.cdid + "' class='js-scroll'>&nbsp;&nbsp;" + timeSeriesData.cdid + "</a>";
-					let timeSeriesDataMonths = data.months;
-					let timeSeriesDataQuarters = data.quarters;
-					let timeSeriesDataYears = data.years;
 					if (data.months.length > 0) {
 						block = "Months"
 						dataArrayMonths = []
@@ -510,6 +534,7 @@
 						y: 20
 					},
 					yAxis: {
+						opposite: true,
 						labels: {
 							enabled: false
 						},
@@ -520,9 +545,13 @@
 					xAxis: {
 						type: "category",
 						crosshair: true,
+						showLastLabel: true,
+						showFirstLabel: false,
 						labels: {
-							enabled: false
-						},
+		             autoRotationLimit: 0,
+								 step: (eval("dataArray" + block).length) -1,
+								 align: 'right'
+		        },
 						minorTickLength: 0,
 						tickLength: 0
 					},
