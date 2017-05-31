@@ -12,8 +12,8 @@ Tools and playing with ONS API
 
 ----------
 
-## [Dashboard](http://rob.chambersbristol.co.uk/dashboard/index.html)
+## [Dashboard](http://rob.chambersbristol.co.uk/dashboard/index.html) [(example)] (http://rob.chambersbristol.co.uk/dashboard/index.html?id=abmi&id=chaw&id=ukpop&id=d7g7&id=ewpop&id=wapop)
 
 ----------
 
-Using the [ONS beta API](https://developer.ons.gov.uk)
+Created using the [ONS beta API and developer site](https://developer.ons.gov.uk)

@@ -520,7 +520,29 @@
 				Highcharts.chart(block + rand, {
 					chart: {
 						height: 200,
-						spacingBottom: 30
+						spacingBottom: 30,
+						zoomType: 'x',
+						resetZoomButton: {
+							position: {
+								align: 'left',
+								verticalAlign: 'bottom',
+								x: 0,
+								y: 0
+							},
+							theme: {
+								fill: '#ffffff',
+								stroke: '#0F8243',
+								r: 0,
+								states: {
+									hover: {
+										fill: '#0F8243',
+										style: {
+											color: '#ffffff'
+										}
+									}
+								}
+							}
+						}
 					},
 					series: [
 						{
@@ -548,10 +570,10 @@
 						showLastLabel: true,
 						showFirstLabel: false,
 						labels: {
-		             autoRotationLimit: 0,
-								 step: (eval("dataArray" + block).length) -1,
-								 align: 'right'
-		        },
+							autoRotationLimit: 0,
+							step: (eval("dataArray" + block).length) - 1,
+							align: 'right'
+						},
 						minorTickLength: 0,
 						tickLength: 0
 					},
