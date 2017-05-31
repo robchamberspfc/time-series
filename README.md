@@ -14,11 +14,11 @@ Using the series identifier search and retrieve data as either tables or charts.
 
 ----------
 
-## [Dashboard](http://rob.chambersbristol.co.uk/dashboard/index.html) 
+## [Dashboard](http://rob.chambersbristol.co.uk/dashboard/index.html)
 
 Using series identifiers as parameters in the URL to build a custom dashboard.
 [(Example)](http://rob.chambersbristol.co.uk/dashboard/index.html?id=abmi&id=chaw&id=ukpop&id=d7g7&id=ewpop&id=wapop)
 
 ----------
 
-Created using the [ONS beta API and developer site](https://developer.ons.gov.uk)
+Created using the [ONS beta API and developer site](https://developer.ons.gov.uk) and [ONS pattern library](http://onsdigital.github.io/ons-pattern-library-starter/).
