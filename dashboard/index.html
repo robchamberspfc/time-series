@@ -226,7 +226,7 @@
 								Time series dashboard
 							</h1>
 							<p class="page-intro__content">
-								Customisable dashboard generated from URL parameters (<a href="index.html?id=abmi&id=chaw&id=ukpop&id=d7g7&id=ewpop&id=wapop">example</a>).
+								Customisable dashboard generated from URL parameters
 							</p>
 						</div>
 					</div>
@@ -238,7 +238,7 @@
 				<div class="col-wrap">
 					<nav>
 						<div class="nav-secondary col col--lg-full">
-							<h2 class="nav-secondary__title">On this page:</h2>
+							<h2 class="nav-secondary__title" id = "anchors">On this page:</h2>
 							<ul id="series" class="nav-secondary__list"></ul>
 						</div>
 					</nav>
@@ -323,6 +323,8 @@
 			</div>
 		</footer>
 
+		<script type="text/javascript" src="//cdn.ons.gov.uk/sixteens/ee328ac/js/main.js"></script>
+
 		<script>
 
 			var api = "https://api.ons.gov.uk/timeseries/"
@@ -332,6 +334,7 @@
 			const ts = document.getElementById('timeSeriesData');
 			const charts = document.getElementById('charts');
 			const series = document.getElementById('series');
+			const anchors = document.getElementById('anchors');
 
 			//load data and start script on DOM load
 			document.addEventListener("DOMContentLoaded", function () {

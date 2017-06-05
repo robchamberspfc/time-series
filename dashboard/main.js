@@ -86,6 +86,10 @@ function getParamsNew() {
   }
   calcDataUri(parameters)
 }
+  else {
+    charts.innerHTML = "<h2>No paramaters found, try this <a href='index.html?id=abmi&amp;id=chaw&amp;id=ukpop&amp;id=d7g7&amp;id=ewpop&amp;id=wapop'>example</a></h2>";
+    anchors.innerHTML = "";
+  }
 }
 
 function blocks(data, latestUri) {
