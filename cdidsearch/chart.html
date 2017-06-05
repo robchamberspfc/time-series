@@ -154,7 +154,7 @@
 											chartdata = [date, parseFloat(value)]
 											eval("dataArray" + block).push(chartdata)
 										})
-										chart (timeSeriesData, block)
+										chart(timeSeriesData, block)
 									}
 									if (data.quarters.length > 0) {
 										block = "Quarters"
@@ -166,7 +166,7 @@
 											chartdata = [date, parseFloat(value)]
 											eval("dataArray" + block).push(chartdata)
 										})
-										chart (timeSeriesData, block)
+										chart(timeSeriesData, block)
 									}
 									if (data.years.length > 0) {
 										block = "Years"
@@ -178,7 +178,7 @@
 											chartdata = [date, parseFloat(value)]
 											eval("dataArray" + block).push(chartdata)
 										})
-										chart (timeSeriesData, block)
+										chart(timeSeriesData, block)
 									}
 								})
 							}
@@ -211,7 +211,7 @@
 							chartdata = [date, parseFloat(value)]
 							eval("dataArray" + block).push(chartdata)
 						})
-						chart (timeSeriesData, block)
+						chart(timeSeriesData, block)
 					}
 					if (data.quarters.length > 0) {
 						block = "Quarters"
@@ -223,7 +223,7 @@
 							chartdata = [date, parseFloat(value)]
 							eval("dataArray" + block).push(chartdata)
 						})
-						chart (timeSeriesData, block)
+						chart(timeSeriesData, block)
 					}
 					if (data.years.length > 0) {
 						block = "Years"
@@ -235,7 +235,7 @@
 							chartdata = [date, parseFloat(value)]
 							eval("dataArray" + block).push(chartdata)
 						})
-						chart (timeSeriesData, block)
+						chart(timeSeriesData, block)
 					}
 				})
 			}
@@ -244,61 +244,66 @@
 				location.reload();
 			}
 
-
-			function chart (timeSeriesData, block) {
-				Highcharts.chart( block , {
-				series: [
-					{
-						data: eval("dataArray" + block),
-						name: timeSeriesData.cdid + ": " + block
-					}
-				],
-				title: {
-					text: timeSeriesData.cdid + ": " + block + " (Dataset: " + timeSeriesData.datasetId + ")"
-				},
-				navigation: {
-					buttonOptions: {
-						enabled: false
-					}
-				},
-				yAxis: {
-					labels: {
-						enabled: false
-					},
+			function chart(timeSeriesData, block) {
+				Highcharts.chart(block, {
+					series: [
+						{
+							data: eval("dataArray" + block),
+							name: timeSeriesData.cdid + ": " + block
+						}
+					],
 					title: {
+						text: timeSeriesData.cdid + ": " + block + " (Dataset: " + timeSeriesData.datasetId + ")"
+					},
+					navigation: {
+						buttonOptions: {
+							enabled: false
+						}
+					},
+					yAxis: {
+						labels: {
+							enabled: false
+						},
+						title: {
+							enabled: false
+						}
+					},
+					legend: {
+						enabled: false
+					},
+					tooltip: {
+						formatter: function () {
+							return '<b>' + this.key + '</b><br>' + timeSeriesData.preUnit + this.y + ' ' + timeSeriesData.unit + '';
+						}
+					},
+					xAxis: {
+						type: "category",
+						crosshair: true
+					},
+					credits: {
 						enabled: false
 					}
-				},
-				legend: {
-					enabled: false
-				},
-				tooltip: {
-					formatter: function () {
-						return '<b>' + this.key + '</b><br>' + timeSeriesData.preUnit + this.y + ' ' + timeSeriesData.unit + '';
-					},
-				},
-				xAxis: {
-					type: "category",
-					crosshair: true
-				},
-				credits: {
-					enabled: false
-				}
-			});
-		}
-
+				});
+			}
 		</script>
 
 		<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+			(function (i, s, o, g, r, a, m) {
+				i['GoogleAnalyticsObject'] = r;
+				i[r] = i[r] || function () {
+					(i[r].q = i[r].q || []).push(arguments)
+				},
+				i[r].l = 1 * new Date();
+				a = s.createElement(o),
+				m = s.getElementsByTagName(o)[0];
+				a.async = 1;
+				a.src = g;
+				m.parentNode.insertBefore(a, m)
+			})(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
-  ga('create', 'UA-82810278-2', 'auto');
-  ga('send', 'pageview');
-
-</script>
+			ga('create', 'UA-82810278-2', 'auto');
+			ga('send', 'pageview');
+		</script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
 

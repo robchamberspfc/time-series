@@ -71,6 +71,7 @@ function append(parent, el) {
 function getParamsNew() {
   urlLower = url.toLowerCase()
   queryString = urlLower.split('?')[1]
+  if (queryString != null) {
   queryString = queryString.split('#')[0];
   id = queryString.split('&');
   for (var i = 0; i < id.length; i++) {
@@ -84,6 +85,7 @@ function getParamsNew() {
     }
   }
   calcDataUri(parameters)
+}
 }
 
 function blocks(data, latestUri) {
