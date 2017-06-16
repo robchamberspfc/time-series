@@ -222,11 +222,9 @@
 							</div>
 						</nav>
 						<div class="col col--md-47 col--lg-48">
-							<h1 class="page-intro__title ">
-								Time series dashboard
+							<h1 class="page-intro__title " id = "pagetitle">
 							</h1>
 							<p class="page-intro__content">
-								Customisable dashboard generated from URL parameters
 							</p>
 						</div>
 					</div>
@@ -329,12 +327,14 @@
 
 			var api = "https://api.ons.gov.uk/timeseries/"
 			var website = "https://www.ons.gov.uk"
+			var title = "Time series dashboard"
 			var parameters = [];
 			var url = window.location.href
 			const ts = document.getElementById('timeSeriesData');
 			const charts = document.getElementById('charts');
 			const series = document.getElementById('series');
 			const anchors = document.getElementById('anchors');
+			const pagetitle = document.getElementById('pagetitle');
 
 			//load data and start script on DOM load
 			document.addEventListener("DOMContentLoaded", function () {

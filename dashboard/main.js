@@ -69,8 +69,8 @@ function append(parent, el) {
 // }
 
 function getParamsNew() {
-  urlLower = url.toLowerCase()
-  queryString = urlLower.split('?')[1]
+  //urlLower = url.toLowerCase()
+  queryString = url.split('?')[1]
   if (queryString != null) {
   queryString = queryString.split('#')[0];
   id = queryString.split('&');
@@ -80,9 +80,16 @@ function getParamsNew() {
       newId = cdid[1]
       parameters[i] = newId;
     } else {
+      if (cdid[0] == "title") {
+        title = cdid[1]
+        title = decodeURIComponent(title)
+      }
+
+
       //future - allow users to decide if only want month/year/quarter for each series
       //console.log(cdid)
     }
+    pagetitle.innerHTML = title
   }
   calcDataUri(parameters)
 }

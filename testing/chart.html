@@ -5,9 +5,18 @@
   <script src="https://code.highcharts.com/modules/data.js"></script>
   <script src="https://code.highcharts.com/modules/exporting.js"></script>
 
+
+		<script src="https://www.google.com/jsapi"></script>
+
+		<script src="http://matatk.agrip.org.uk/audiochart/lib/audiochart.min.js"></script>
+
+
+
   <body>
 
-    <div id="tsdm" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+    <div id="chart" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+    <button id="play">Play or pause</button>
+
     <div id="tsdq" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
     <div id="tsdy" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 
@@ -15,7 +24,7 @@
 
   <script>
 
-    const tsdm = document.getElementById('timeSeriesDataMonths');
+    const chart = document.getElementById('timeSeriesDataMonths');
     const tsdq = document.getElementById('timeSeriesDataQuarters');
     const tsdy = document.getElementById('timeSeriesDataYears');
 
