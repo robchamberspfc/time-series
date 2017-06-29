@@ -6,68 +6,6 @@ function append(parent, el) {
   return parent.appendChild(el); // Append the second parameter(element) to the first one
 }
 
-
-// function getAllUrlParams(url) {
-//
-//   // we'll store the parameters here
-//   var parameters = {};
-//   // get query string from url (optional) or window
-//   var queryString = url ?
-//     url.split('?')[1] :
-//     window.location.search.slice(1);
-//
-//
-//
-//   // if query string exists
-//   if (queryString) {
-//     // stuff after # is not part of query string, so ignore
-//     queryString = queryString.split('#')[0];
-//
-//     // split our query string into its component parts
-//     var arr = queryString.split('&');
-//
-//     for (var i = 0; i < arr.length; i++) {
-//       // separate the keys and the values
-//       var a = arr[i].split('=');
-//       // in case params look like: list[]=thing1&list[]=thing2
-//       var paramNum = undefined;
-//       var paramName = a[0].replace(/\[\d*\]/, function(v) {
-//         paramNum = v.slice(1, -1);
-//         return '';
-//       });
-//
-//       // set parameter value (use 'true' if empty)
-//       var paramValue = typeof(a[1]) === 'undefined' ?
-//         true :
-//         a[1];
-//
-//       // (optional) keep case consistent
-//       paramName = paramName.toLowerCase();
-//       paramValue = paramValue.toLowerCase();
-//
-//       //console.log (paramValue) if parameter name already exists
-//       if (parameters[paramName]) {
-//         // convert value to array (if still string)
-//         if (typeof parameters[paramName] === 'string') {
-//           parameters[paramName] = [parameters[paramName]];
-//         }
-//         // if no array index number specified...
-//         if (typeof paramNum === 'undefined') {
-//           // put the value on the end of the array
-//           parameters[paramName].push(paramValue // if array index number specified...
-//           );
-//         } else {
-//           // put the value at that index number
-//           parameters[paramName][paramNum] = paramValue // if param name doesn't exist yet, set it;
-//         }
-//       } else {
-//         parameters[paramName] = [paramValue];
-//       }
-//     }
-//   }
-//   calcDataUri(parameters)
-// }
-
 function getParamsNew() {
   //urlLower = url.toLowerCase()
   queryString = url.split('?')[1]
@@ -85,15 +23,16 @@ function getParamsNew() {
         title = decodeURIComponent(title)
       }
       else {
-        if (cdid[0] == "embed") {
-          embed = cdid[1]
-          console.log (embed)
+        if (cdid[0] == "embed" && cdid[1] == "true") {
+          // embed = cdid[1]
+          // console.log (embed)
+          nav.style.display = 'none';
+          menu.style.display = 'none';
+          searchBar.style.display = 'none';
+          breadcrumb.style.display = 'none';
+          footer.style.display = 'none';
         }
-      nav.style.display = 'none';
-      menu.style.display = 'none';
-      searchBar.style.display = 'none';
-      breadcrumb.style.display = 'none';
-      footer.style.display = 'none';
+
       }
 
       //future - allow users to decide if only want month/year/quarter for each series
@@ -105,8 +44,9 @@ function getParamsNew() {
   calcDataUri(parameters)
 }
   else {
-    charts.innerHTML = "<h2>No paramaters found, try this <a href='index.html?id=abmi&amp;id=chaw&amp;id=ukpop&amp;id=d7g7&amp;id=ewpop&amp;id=wapop'>example</a></h2>";
+    charts.innerHTML = "<h2>No paramaters found, try this <a href='index.html?id=abmi&amp;id=chaw&amp;id=ukpop&amp;id=d7g7&amp;id=ewpop&amp;id=wapop&amp;title=Dashboard'>example</a></h2><h2>Or to see an option for embedding, try this <a href='index.html?id=abmi&amp;id=chaw&amp;id=ukpop&amp;id=d7g7&amp;id=ewpop&amp;id=wapop&amp;title=Dashboard&amp;embed=true'>example</a></h2>";
     anchors.innerHTML = "";
+    breadcrumb.style.display = 'none';
   }
 }
 
