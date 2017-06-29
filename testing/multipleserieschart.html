@@ -5,21 +5,17 @@
   <script src="https://code.highcharts.com/modules/data.js"></script>
   <script src="https://code.highcharts.com/modules/exporting.js"></script>
 
-  <script src="https://www.google.com/jsapi"></script>
+
+		<script src="https://www.google.com/jsapi"></script>
+
 
   <body>
 
-    <div id="tsdm" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-    <div id="tsdq" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-    <div id="tsdy" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+    <div id="tsd" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 
   </body>
 
   <script>
-
-    const tsdm = document.getElementById('timeSeriesDataMonths');
-    const tsdq = document.getElementById('timeSeriesDataQuarters');
-    const tsdy = document.getElementById('timeSeriesDataYears');
 
     function createNode(element) {
       return document.createElement(element); // Create the type of element you pass in the parameters
@@ -45,15 +41,7 @@
             parseFloat(timeSeriesDataMonths.value)
           ]
           datainnitmonths.push(chartdata)
-        });
-        Highcharts.chart('tsdm', {
-          series: [
-            {
-              data: datainnitmonths
-            }
-          ]
-        });
-      }
+        })
       if (data.quarters.length > 0) {
         datainnitquarters = []
         timeSeriesDataQuarters.map(function (timeSeriesDataQuarters) {
@@ -64,15 +52,7 @@
             parseFloat(timeSeriesDataQuarters.value)
           ]
           datainnitquarters.push(chartdata)
-        });
-        Highcharts.chart('tsdq', {
-          series: [
-            {
-              data: datainnitquarters
-            }
-          ]
-        });
-      }
+        })
       if (data.years.length > 0) {
         datainnityears = []
         timeSeriesDataYears.map(function (timeSeriesDataYears) {
@@ -84,15 +64,33 @@
           ]
           datainnityears.push(chartdata)
         })
-        Highcharts.chart('tsdy', {
+        Highcharts.chart('tsd', {
+          xAxis: {
+        type: 'datetime',
+        dateTimeLabelFormats: { // don't display the dummy year
+            month: '%b %e',
+            year: '%b'
+        },
+        title: {
+            text: 'Date'
+        }
+          },
           series: [
             {
               data: datainnityears
+            },
+            // {
+            //   data: datainnitquarters
+            // },
+            {
+              data: datainnitmonths
             }
           ]
         });
-    }
-  })
+      }
+      }
+      }
+    })
   </script>
   <script></script>
 

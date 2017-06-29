@@ -84,13 +84,24 @@ function getParamsNew() {
         title = cdid[1]
         title = decodeURIComponent(title)
       }
-
+      else {
+        if (cdid[0] == "embed") {
+          embed = cdid[1]
+          console.log (embed)
+        }
+      nav.style.display = 'none';
+      menu.style.display = 'none';
+      searchBar.style.display = 'none';
+      breadcrumb.style.display = 'none';
+      footer.style.display = 'none';
+      }
 
       //future - allow users to decide if only want month/year/quarter for each series
       //console.log(cdid)
     }
     pagetitle.innerHTML = title
   }
+
   calcDataUri(parameters)
 }
   else {
