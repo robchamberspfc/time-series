@@ -1,0 +1,166 @@
+<html>
+<body>
+    <div>
+       Pick a thing <select onchange = "setMeasure(this.value)">
+            <option disabled = "true" selected>
+                --- pick measure ---
+            </option>
+            <option value="pension">
+                State pension
+            </option>
+            <option value="student">
+                Student loan
+            </option>
+            <option value="rpi">
+                Other RPI based
+            </option>
+            <option value="cpi">
+                Other CPI based
+            </option>
+            <option value="cpih">
+                Other CPIH based
+            </option>
+        </select>
+    </div>
+        <div id="date" style="display:none">Date
+        <select onchange = "pickDate(this.value)">
+                <option value="1">
+                    January
+                </option>
+                <option value="2">
+                    February
+                </option>
+            </select>
+    </div>
+    <div id = "result">
+    </div>
+</body>
+<script>
+
+function createNode(element) {
+    return document.createElement(element); // Create the type of element you pass in the parameters
+ }
+
+function append(parent, el) {
+    return parent.appendChild(el); // Append the second parameter(element) to the first one
+}
+
+const result = document.getElementById('result');
+
+const productMeasure = {
+    pension:"rpi",
+    student:"rpi",
+    rpi:"rpi",
+    cpi:"cpi",
+    cpih:"cpih"
+}
+
+const productMonth = {
+    pension:04,
+    student:09,
+    rpi:"pickdate",
+    cpi:"pickdate",
+    cpih:"pickdate"
+}
+
+const inflationMap = {
+    cpi:"d7g7",
+    rpi:"czbh",
+    cpih:"l55o"
+}
+
+const monthMap = {
+    1:"JAN",
+    2:"FEB",
+    3:"MAR",
+    4:"APR",
+    5:"MAY",
+    6:"JUN",
+    7:"JUL",
+    8:"AUG",
+    9:"SEP",
+    10:"OCT",
+    11:"NOV",
+    12:"DEC",
+}
+
+let state = {measure:""}
+let timeSeriesDataMonths = {}
+
+let year = new Date().getFullYear()
+let month = new Date().getMonth() + 1
+let day = new Date().getDate()
+
+if (month < 10){
+    month = "0" + (new Date().getMonth() + 1)
+} 
+
+if (day < 10){
+    day = "0" + new Date().getDate()
+}
+
+today = year + month + day
+
+function setMeasure(choice){
+
+const url = "https://www.ons.gov.uk/economy/inflationandpriceindices/timeseries/"
+// let startValue = 100
+state.measure = choice
+
+
+
+
+let inflationMeasure = productMeasure[choice]
+let product = productMonth[choice]
+let findMeasure = inflationMap[inflationMeasure]
+
+fetch (url + findMeasure + "/data", {mode: 'cors'}).then(data => data.json()).then(function (data) {
+    releaseDate = data.description.releaseDate.split("T")[0].replace(/-/g,'')
+    if (product == (month - 1)){
+        if (releaseDate-today <= 0 ){
+            year = year-1
+        } 
+    }
+    if (product >= month){
+            year = year-1
+    }
+    timeSeriesDataMonths = data.months;
+
+    if(productMonth[choice] == "pickdate"){
+        document.getElementById("date").style = "";
+
+    } else {
+        timeSeriesDataMonths.map(function (timeSeriesDataMonths) {
+            console.log (product)
+            if (timeSeriesDataMonths.date == year + " " + monthMap[product] ){
+                value = timeSeriesDataMonths.value
+                label = timeSeriesDataMonths.label
+                p = createNode('p');
+                p.innerHTML = value + "%"
+                append(result, p);
+            }
+        })
+    }
+  })
+}
+
+function pickDate(choice){
+    console.log(choice)
+    console.log(monthMap)
+
+            timeSeriesDataMonths.map(function (timeSeriesDataMonths) {
+            if (timeSeriesDataMonths.date == year + " " + monthMap[choice] ){
+                value = timeSeriesDataMonths.value
+                label = timeSeriesDataMonths.label
+                console.log(value)
+                console.log(label)
+                p = createNode('p');
+                p.innerHTML = value + "%"
+                append(result, p);
+            }
+        })
+    }
+
+</script>
+
+</html>
