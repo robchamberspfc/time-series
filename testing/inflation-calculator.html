@@ -1,13 +1,13 @@
 <html>
     <meta content="width=device-width,initial-scale=1.0,user-scalable=1" name="viewport">
     <!--[if lte IE 8]>
-      <link rel="stylesheet" href="http://localhost:9000/dist/css/old-ie.css">
+      <link rel="stylesheet" href="//cdn.ons.gov.uk/sixteens/7b354cb/css/old-ie.css">
 	<![endif]-->
     <!--[if IE 9]>
-      <link rel="stylesheet" href="http://localhost:9000/dist/css/ie-9.css">
+      <link rel="stylesheet" href="//cdn.ons.gov.uk/sixteens/7b354cb/css/ie-9.css">
     <![endif]-->
 	<!--[if gt IE 9]><!-->
-        <link rel="stylesheet" href="http://localhost:9000/dist/css/main.css">
+        <link rel="stylesheet" href="//cdn.ons.gov.uk/sixteens/7b354cb/css/main.css">
     <!--<![endif]-->
 
 <body>
@@ -17,7 +17,7 @@
             <div class="col-wrap">
                 <div class="col">
                     <div class="col col--md-47 col--lg-34">
-                            <h2>Get the right inflation number</h2>
+                            <h2>Inflation estimate helper</h2>
                                 <div>
                                     <h3>Get inflation for 
                                         <select onchange = "setMeasure(this.value)">
@@ -148,10 +148,14 @@ let month = new Date().getMonth() + 1;
 let day = new Date().getDate();
 let time = (new Date().getHours() * 60) + new Date().getMinutes();
     if (month < 10){
-        monthString = "0" + (new Date().getMonth() + 1);
+        monthString = "0" + month;
+    } else {
+        monthString = month
     }
     if (day < 10){
-        dayString = "0" + new Date().getDate();
+        dayString = "0" + day;
+    } else {
+        dayString = day;
     }
 today = year + monthString + dayString;
 
