@@ -7,7 +7,7 @@
       <link rel="stylesheet" href="//cdn.ons.gov.uk/sixteens/7b354cb/css/ie-9.css">
     <![endif]-->
 	<!--[if gt IE 9]><!-->
-        <link rel="stylesheet" href="//cdn.ons.gov.uk/sixteens/7b354cb/css/main.css">
+        <link rel="stylesheet" href="//cdn.ons.gov.uk/sixteens/a62dd01/css/main.css">
     <!--<![endif]-->
 
 <body>
@@ -194,9 +194,14 @@ function setMeasure(choice){
                     label = timeSeriesDataMonths.label
                     span = createNode("span");
                     p = createNode("p");
+                    warning = createNode("p");
                     span.innerHTML = value + "%"
                     span.classList.add("tiles__figure--home");
                     p.innerHTML = "Displaying " + inflationMeasure.toUpperCase() + " for " + label
+                    if (inflationMeasure == "rpi"){
+                        warning.innerHTML = "ONS does not recommend the use of RPI. For more information see <a href = 'https://www.ons.gov.uk/economy/inflationandpriceindices/articles/shortcomingsoftheretailpricesindexasameasureofinflation/2018-03-08' style = 'color:white;text-decoration: underline' > Shortcomings of the Retail Prices Index as a measure of inflation</a>"
+                        append(p, warning);
+                    }
                     append(span, p);
                     append(result, span);
                     document.getElementById("disclaimer").style = "";
@@ -229,9 +234,14 @@ function pickDate(choice){
             label = timeSeriesDataMonths.label
             span = createNode("span");
             p = createNode("p");
+            warning = createNode("p");
             span.innerHTML = value + "%"
             span.classList.add("tiles__figure--home");
             p.innerHTML = "Displaying " + inflationMeasure.toUpperCase() + " for " + label
+            if (inflationMeasure == "rpi"){
+                warning.innerHTML = "ONS does not recommend the use of RPI. For more information see <a href = 'https://www.ons.gov.uk/economy/inflationandpriceindices/articles/shortcomingsoftheretailpricesindexasameasureofinflation/2018-03-08' style = 'color:white;text-decoration: underline' > Shortcomings of the Retail Prices Index as a measure of inflation</a>"
+                append(p, warning);
+            }
             append(span, p);
             append(result, span);
             document.getElementById("disclaimer").style = "";
